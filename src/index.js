@@ -1,32 +1,149 @@
-/* eslint-disable import/no-commonjs */
-module.exports = {
-  env: {
-    es6: true,
-    browser: true,
-    node: true,
-    'react-native/react-native': true,
-  },
+const schemaJson = require(__dirname, '../../../src/services/GraphQL/graphql.schema.json');
 
-  parserOptions: {
-    sourceType: 'module',
-    ecmaFeatures: {
-      jsx: true,
-    },
-  },
+const env = {
+  es6: true,
+  browser: true,
+  node: true,
+  'react-native/react-native': true,
+};
 
-  settings: {
-    'import/resolver': {
-      node: {
-        extensions: ['.ts', '.tsx', '.js', '.jsx'],
+const parserOptions = {
+  sourceType: 'module',
+  ecmaFeatures: { jsx: true },
+};
+
+const settings = {
+  'import/resolver': { node: { extensions: ['.ts', '.tsx', '.js', '.jsx'] } },
+  react: { version: 'detect' },
+};
+
+const overrides = [
+  {
+    files: ['*.ts', '*.tsx'],
+    parser: require.resolve('@typescript-eslint/parser'),
+    plugins: ['@typescript-eslint/eslint-plugin'],
+    settings: {
+      'import/extensions': ['.js', '.ts', '.tsx'],
+      'import/parsers': {
+        '@typescript-eslint/parser': ['.ts', '.tsx'],
+      },
+      'import/resolver': {
+        node: {
+          extensions: ['.js', '.ts', '.tsx'],
+        },
       },
     },
-    react: {
-      version: 'detect',
+    rules: {
+      '@typescript-eslint/adjacent-overload-signatures': 'error',
+      '@typescript-eslint/array-type': 'error',
+      '@typescript-eslint/consistent-type-assertions': ['error', { assertionStyle: 'as' }],
+      '@typescript-eslint/member-delimiter-style': 'error',
+      '@typescript-eslint/no-array-constructor': 'error',
+      '@typescript-eslint/no-dynamic-delete': 'error',
+      '@typescript-eslint/no-empty-interface': ['error', { allowSingleExtends: true }],
+      '@typescript-eslint/no-extra-non-null-assertion': 'error',
+      '@typescript-eslint/no-extraneous-class': 'error',
+      '@typescript-eslint/no-misused-new': 'error',
+      '@typescript-eslint/no-namespace': 'error',
+      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+      '@typescript-eslint/no-use-before-define': [
+        'error',
+        {
+          functions: false,
+          classes: false,
+          variables: false,
+          typedefs: false,
+        },
+      ],
+      '@typescript-eslint/no-useless-constructor': 'error',
+      '@typescript-eslint/prefer-for-of': 'error',
+      '@typescript-eslint/prefer-function-type': 'error',
+      '@typescript-eslint/prefer-namespace-keyword': 'error',
+      '@typescript-eslint/prefer-optional-chain': 'error',
+      '@typescript-eslint/triple-slash-reference': 'error',
+      '@typescript-eslint/unified-signatures': 'error',
+
+      'default-case': 'off',
+      'no-dupe-class-members': 'off',
+      'no-undef': 'off',
+      'no-unused-vars': 'off',
+      'no-array-constructor': 'off',
+      'no-use-before-define': 'off',
     },
   },
+  {
+    plugins: ['jest'],
+    files: ['*.{spec,test}.{js,ts,tsx}', '**/__tests__/**/*.{js,ts,tsx}'],
+    env: {
+      jest: true,
+    },
+    rules: {
+      'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+      'jest/consistent-test-it': ['error', { fn: 'test' }],
+      'jest/expect-expect': ['error', { assertFunctionNames: ['expect', 'element'] }],
+      'jest/no-disabled-tests': 'error',
+      'jest/no-duplicate-hooks': 'error',
+      'jest/no-export': 'error',
+      'jest/no-focused-tests': 'error',
+      'jest/no-identical-title': 'error',
+      'jest/no-jasmine-globals': 'error',
+      'jest/no-test-prefixes': 'error',
+      'jest/no-test-return-statement': 'error',
+      'jest/prefer-todo': 'error',
+      'jest/require-to-throw-message': 'error',
+      'jest/valid-describe-callback': 'error',
+      'jest/valid-expect-in-promise': 'error',
+      'jest/valid-expect': 'error',
+      'jest/valid-title': 'error',
+      'jest/no-restricted-matchers': [
+        'error',
+        {
+          toBeTruthy: 'Avoid `toBeTruthy`',
+          toBeFalsy: 'Avoid `toBeFalsy`',
+        },
+      ],
+    },
+  },
+  {
+    files: ['*.js'],
+    parser: require.resolve('@babel/eslint-parser'),
+    parserOptions: {
+      requireConfigFile: false,
+    },
+    rules: {
+      'import/default': 'error',
+      'import/namespace': 'error',
+      'import/no-named-as-default': 'error',
+      'import/no-named-as-default-member': 'error',
+      'import/no-cycle': 'error',
+      'import/no-deprecated': 'error',
+    },
+  },
+  {
+    files: ['*.config.js', '.*rc.js'],
+    env: {
+      node: true,
+    },
+    rules: {
+      'import/no-commonjs': 'off',
+      'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+    },
+  },
+];
 
+if (schemaJson && schemaJson.toJSON) {
+  overrides.push({
+    plugins: ['graphql'],
+    files: ['**/queries/*.{ts,tsx}'],
+    rules: { 'graphql/template-strings': ['error', { env: 'apollo', schemaJson }] },
+  });
+}
+
+module.exports = {
+  env,
+  parserOptions,
+  settings,
   extends: ['eslint-config-prettier', 'plugin:react-native/all'],
-
   plugins: [
     'babel',
     'eslint-comments',
@@ -37,7 +154,6 @@ module.exports = {
     'react-native',
     'simple-import-sort',
   ],
-
   rules: {
     'array-callback-return': 'error',
     'babel/no-invalid-this': 'error',
@@ -204,132 +320,7 @@ module.exports = {
       { groups: [['^\\u0000'], ['^@?\\w'], ['^~/'], ['^../'], ['^./']] },
     ],
   },
-  overrides: [
-    {
-      files: ['*.ts', '*.tsx'],
-      parser: require.resolve('@typescript-eslint/parser'),
-      plugins: ['@typescript-eslint/eslint-plugin'],
-      settings: {
-        'import/extensions': ['.js', '.ts', '.tsx'],
-        'import/parsers': {
-          '@typescript-eslint/parser': ['.ts', '.tsx'],
-        },
-        'import/resolver': {
-          node: {
-            extensions: ['.js', '.ts', '.tsx'],
-          },
-        },
-      },
-      rules: {
-        '@typescript-eslint/adjacent-overload-signatures': 'error',
-        '@typescript-eslint/array-type': 'error',
-        '@typescript-eslint/consistent-type-assertions': ['error', { assertionStyle: 'as' }],
-        '@typescript-eslint/member-delimiter-style': 'error',
-        '@typescript-eslint/no-array-constructor': 'error',
-        '@typescript-eslint/no-dynamic-delete': 'error',
-        '@typescript-eslint/no-empty-interface': ['error', { allowSingleExtends: true }],
-        '@typescript-eslint/no-extra-non-null-assertion': 'error',
-        '@typescript-eslint/no-extraneous-class': 'error',
-        '@typescript-eslint/no-misused-new': 'error',
-        '@typescript-eslint/no-namespace': 'error',
-        '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
-        '@typescript-eslint/no-use-before-define': [
-          'error',
-          {
-            functions: false,
-            classes: false,
-            variables: false,
-            typedefs: false,
-          },
-        ],
-        '@typescript-eslint/no-useless-constructor': 'error',
-        '@typescript-eslint/prefer-for-of': 'error',
-        '@typescript-eslint/prefer-function-type': 'error',
-        '@typescript-eslint/prefer-namespace-keyword': 'error',
-        '@typescript-eslint/prefer-optional-chain': 'error',
-        '@typescript-eslint/triple-slash-reference': 'error',
-        '@typescript-eslint/unified-signatures': 'error',
-
-        'default-case': 'off',
-        'no-dupe-class-members': 'off',
-        'no-undef': 'off',
-        'no-unused-vars': 'off',
-        'no-array-constructor': 'off',
-        'no-use-before-define': 'off',
-      },
-    },
-    {
-      plugins: ['jest'],
-      files: ['*.{spec,test}.{js,ts,tsx}', '**/__tests__/**/*.{js,ts,tsx}'],
-      env: {
-        jest: true,
-      },
-      rules: {
-        'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
-        'jest/consistent-test-it': ['error', { fn: 'test' }],
-        'jest/expect-expect': ['error', { assertFunctionNames: ['expect', 'element'] }],
-        'jest/no-disabled-tests': 'error',
-        'jest/no-duplicate-hooks': 'error',
-        'jest/no-export': 'error',
-        'jest/no-focused-tests': 'error',
-        'jest/no-identical-title': 'error',
-        'jest/no-jasmine-globals': 'error',
-        'jest/no-test-prefixes': 'error',
-        'jest/no-test-return-statement': 'error',
-        'jest/prefer-todo': 'error',
-        'jest/require-to-throw-message': 'error',
-        'jest/valid-describe-callback': 'error',
-        'jest/valid-expect-in-promise': 'error',
-        'jest/valid-expect': 'error',
-        'jest/valid-title': 'error',
-        'jest/no-restricted-matchers': [
-          'error',
-          {
-            toBeTruthy: 'Avoid `toBeTruthy`',
-            toBeFalsy: 'Avoid `toBeFalsy`',
-          },
-        ],
-      },
-    },
-    {
-      files: ['*.js'],
-      parser: require.resolve('@babel/eslint-parser'),
-      parserOptions: {
-        requireConfigFile: false,
-      },
-      rules: {
-        'import/default': 'error',
-        'import/namespace': 'error',
-        'import/no-named-as-default': 'error',
-        'import/no-named-as-default-member': 'error',
-        'import/no-cycle': 'error',
-        'import/no-deprecated': 'error',
-      },
-    },
-    {
-      plugins: ['graphql'],
-      files: ['**/queries/*.{ts,tsx}'],
-      rules: {
-        'graphql/template-strings': [
-          'error',
-          {
-            env: 'apollo',
-            schemaJson: require(__dirname, '../../../src/services/GraphQL/graphql.schema.json'),
-          },
-        ],
-      },
-    },
-    {
-      files: ['*.config.js', '.*rc.js'],
-      env: {
-        node: true,
-      },
-      rules: {
-        'import/no-commonjs': 'off',
-        'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
-      },
-    },
-  ],
+  overrides,
   globals: {
     jest: true,
     jasmine: true,
