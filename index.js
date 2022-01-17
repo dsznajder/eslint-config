@@ -1,5 +1,12 @@
 /* eslint-disable import/no-commonjs */
 const path = require('path');
+let schemaJsonFilepath = '';
+
+try {
+  schemaJsonFilepath = path.resolve(__dirname, 'src/services/GraphQL/graphql.schema.json');
+} catch (error) {
+  console.info('Schema not found');
+}
 
 module.exports = {
   env: {
@@ -308,19 +315,15 @@ module.exports = {
         'import/no-deprecated': 'error',
       },
     },
-    {
-      plugins: ['graphql'],
-      files: ['**/queries/*.{ts,tsx}'],
-      rules: {
-        'graphql/template-strings': [
-          'error',
-          {
-            env: 'apollo',
-            schemaJsonFilepath: path.resolve(__dirname, 'src/services/GraphQL/graphql.schema.json'),
+    schemaJsonFilepath
+      ? {
+          plugins: ['graphql'],
+          files: ['**/queries/*.{ts,tsx}'],
+          rules: {
+            'graphql/template-strings': ['error', { env: 'apollo', schemaJsonFilepath }],
           },
-        ],
-      },
-    },
+        }
+      : {},
     {
       files: ['*.config.js', '.*rc.js'],
       env: {
