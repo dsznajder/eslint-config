@@ -1,10 +1,12 @@
 /* eslint-disable import/no-commonjs */
 const path = require('path');
-let schemaJsonFilepath = '';
+
+let schemaJsonFilepath = null;
 
 try {
-  schemaJsonFilepath = path.resolve(__dirname, '../../src/services/GraphQL/graphql.schema.json');
+  schemaJsonFilepath = path.resolve(__dirname, '../../../src/services/GraphQL/graphql.schema.json');
 } catch (error) {
+  schemaJsonFilepath = null;
   console.info('Schema not found');
 }
 
