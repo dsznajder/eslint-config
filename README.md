@@ -3,7 +3,7 @@
 ## Install
 
 ```sh
- $ yarn add eslint-config-dsznajder --dev
+$ yarn add eslint prettier eslint-config-dsznajder --dev
 ```
 
 ## Usage
