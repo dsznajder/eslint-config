@@ -1,3 +1,10 @@
+## [0.1.3](https://github.com/dsznajder/eslint-config-dsznajder/compare/v0.1.2...v0.1.3) (2022-01-17)
+
+
+### Bug Fixes
+
+* graphql path ([5a69974](https://github.com/dsznajder/eslint-config-dsznajder/commit/5a69974b6d5837a993fcab5919bdfd6c72316842))
+
 ## [0.1.2](https://github.com/dsznajder/eslint-config-dsznajder/compare/v0.1.1...v0.1.2) (2022-01-17)
 
 ## [0.1.1](https://github.com/dsznajder/eslint-config-dsznajder/compare/v0.1.0...v0.1.1) (2022-01-17)
