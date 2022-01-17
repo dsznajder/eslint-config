@@ -11,6 +11,7 @@ module.exports = {
   },
   npm: {
     publish: true,
+    skipChecks: true,
   },
   github: {
     update: true,
@@ -18,6 +19,7 @@ module.exports = {
     releaseName: '🚀 🎊 🎉 Release ${version} 🎉 🎊 🚀',
   },
   hooks: {
+    'before:init': 'git fetch --prune --prune-tags origin',
     'after:git:release': 'git push origin HEAD',
   },
   plugins: {
