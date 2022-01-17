@@ -6,6 +6,10 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      NPM_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+
     steps:
       - uses: styfle/cancel-workflow-action@0.9.1
         with:
@@ -13,22 +17,21 @@ jobs:
           access_token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v2
         with:
           node-version: '16'
           cache: 'yarn'
 
-      - run: yarn install
-      - run: yarn test
-      - run: yarn release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
-
-      - name: Push release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Git config
         run: |
           git config user.name "${GITHUB_ACTOR}"
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-          git push
+
+      - run: yarn install --frozen-lockfile
+      - run: yarn test
+      - name: Release
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
+          yarn release

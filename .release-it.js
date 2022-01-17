@@ -3,7 +3,7 @@ module.exports = {
   git: {
     commit: true,
     commitArgs: ['-n'],
-    commitMessage: 'release(:tada:): ${version}',
+    commitMessage: ':tada:: v${version}',
     push: true,
     requireCleanWorkingDir: false,
     requireUpstream: false,
@@ -16,7 +16,7 @@ module.exports = {
   github: {
     update: true,
     release: true,
-    releaseName: '🚀 🎊 🎉 Release ${version} 🎉 🎊 🚀',
+    releaseName: '🚀 🎊 🎉 Release v${version} 🎉 🎊 🚀',
   },
   hooks: {
     'before:init': 'git fetch --prune --prune-tags origin',
