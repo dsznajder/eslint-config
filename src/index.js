@@ -3,7 +3,7 @@ const path = require('path');
 let schemaJsonFilepath = '';
 
 try {
-  schemaJsonFilepath = path.resolve(__dirname, 'src/services/GraphQL/graphql.schema.json');
+  schemaJsonFilepath = path.resolve(__dirname, '../../src/services/GraphQL/graphql.schema.json');
 } catch (error) {
   console.info('Schema not found');
 }
