@@ -28,6 +28,9 @@
     "release": "release-it --ci",
     "test": "eslint --ext '.js,.ts,.tsx' tests/**"
   },
+  "resolutions": {
+    "ws": "7.4.6"
+  },
   "dependencies": {
     "@babel/core": "7.16.7",
     "@babel/eslint-parser": "7.16.5",
