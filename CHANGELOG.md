@@ -1,3 +1,10 @@
+## [0.1.4](https://github.com/dsznajder/eslint-config-dsznajder/compare/v0.1.3...v0.1.4) (2022-01-17)
+
+
+### Bug Fixes
+
+* pin ws version ([caf98ae](https://github.com/dsznajder/eslint-config-dsznajder/commit/caf98aea36d31c4f5d1af2e8e12fefb62a487156))
+
 ## [0.1.3](https://github.com/dsznajder/eslint-config-dsznajder/compare/v0.1.2...v0.1.3) (2022-01-17)
 
 
