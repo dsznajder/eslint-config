@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-dsznajder",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "author": " Damian Sznajder <damsznajder@gmail.com>",
   "license": "MIT",
   "description": "Opinionated eslint config",
