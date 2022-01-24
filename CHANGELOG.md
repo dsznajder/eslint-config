@@ -1,3 +1,5 @@
+## [0.1.9](https://github.com/dsznajder/eslint-config-dsznajder/compare/v0.1.7...v0.1.9) (2022-01-24)
+
 ## [0.1.8](https://github.com/dsznajder/eslint-config-dsznajder/compare/v0.1.7...v0.1.8) (2022-01-17)
 
 ## [0.1.7](https://github.com/dsznajder/eslint-config-dsznajder/compare/v0.1.6...v0.1.7) (2022-01-17)
