@@ -24,14 +24,8 @@ const overrides = [
     plugins: ['@typescript-eslint/eslint-plugin'],
     settings: {
       'import/extensions': ['.js', '.ts', '.tsx'],
-      'import/parsers': {
-        '@typescript-eslint/parser': ['.ts', '.tsx'],
-      },
-      'import/resolver': {
-        node: {
-          extensions: ['.js', '.ts', '.tsx'],
-        },
-      },
+      'import/parsers': { '@typescript-eslint/parser': ['.ts', '.tsx'] },
+      'import/resolver': { node: { extensions: ['.js', '.ts', '.tsx'] } },
     },
     rules: {
       '@typescript-eslint/adjacent-overload-signatures': 'error',
@@ -48,12 +42,7 @@ const overrides = [
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
       '@typescript-eslint/no-use-before-define': [
         'error',
-        {
-          functions: false,
-          classes: false,
-          variables: false,
-          typedefs: false,
-        },
+        { functions: false, classes: false, variables: false, typedefs: false },
       ],
       '@typescript-eslint/no-useless-constructor': 'error',
       '@typescript-eslint/prefer-for-of': 'error',
@@ -62,7 +51,6 @@ const overrides = [
       '@typescript-eslint/prefer-optional-chain': 'error',
       '@typescript-eslint/triple-slash-reference': 'error',
       '@typescript-eslint/unified-signatures': 'error',
-
       'default-case': 'off',
       'no-dupe-class-members': 'off',
       'no-undef': 'off',
@@ -74,9 +62,7 @@ const overrides = [
   {
     plugins: ['jest'],
     files: ['*.{spec,test}.{js,ts,tsx}', '**/__tests__/**/*.{js,ts,tsx}'],
-    env: {
-      jest: true,
-    },
+    env: { jest: true },
     rules: {
       'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
       'jest/consistent-test-it': ['error', { fn: 'test' }],
@@ -97,19 +83,14 @@ const overrides = [
       'jest/valid-title': 'error',
       'jest/no-restricted-matchers': [
         'error',
-        {
-          toBeTruthy: 'Avoid `toBeTruthy`',
-          toBeFalsy: 'Avoid `toBeFalsy`',
-        },
+        { toBeTruthy: 'Avoid `toBeTruthy`', toBeFalsy: 'Avoid `toBeFalsy`' },
       ],
     },
   },
   {
     files: ['*.js'],
     parser: require.resolve('@babel/eslint-parser'),
-    parserOptions: {
-      requireConfigFile: false,
-    },
+    parserOptions: { requireConfigFile: false },
     rules: {
       'import/default': 'error',
       'import/namespace': 'error',
@@ -121,9 +102,7 @@ const overrides = [
   },
   {
     files: ['*.config.js', '.*rc.js'],
-    env: {
-      node: true,
-    },
+    env: { node: true },
     rules: {
       'import/no-commonjs': 'off',
       'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
@@ -143,6 +122,8 @@ module.exports = {
   env,
   parserOptions,
   settings,
+  overrides,
+  globals: { jest: true, jasmine: true },
   extends: ['eslint-config-prettier', 'plugin:react-native/all'],
   plugins: [
     'babel',
@@ -296,10 +277,7 @@ module.exports = {
 
     'import/no-unresolved': [
       'error',
-      {
-        caseSensitive: false,
-        ignore: ['^(~|jest)/', 'react-native-reanimated'],
-      },
+      { caseSensitive: false, ignore: ['^(~|jest)/', 'react-native-reanimated'] },
     ],
     'prettier/prettier': [
       'error',
@@ -319,10 +297,5 @@ module.exports = {
       'error',
       { groups: [['^\\u0000'], ['^@?\\w'], ['^~/'], ['^../'], ['^./']] },
     ],
-  },
-  overrides,
-  globals: {
-    jest: true,
-    jasmine: true,
   },
 };
