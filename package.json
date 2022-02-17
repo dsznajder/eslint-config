@@ -57,6 +57,9 @@
     "eslint": "^8",
     "prettier": "^2"
   },
+  "resolutions": {
+    "ws": "^7.4.6"
+  },
   "prettier": {
     "bracketSpacing": true,
     "bracketSameLine": false,
