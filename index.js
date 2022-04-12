@@ -1,4 +1,6 @@
-const schemaJson = require(__dirname, '../../../src/services/GraphQL/graphql.schema.json');
+const schemaJson = require(__dirname, '../../src/services/GraphQL/graphql.schema.json');
+
+const defaultExtensions = ['.js', '.jsx', '.ts', '.tsx'];
 
 const env = {
   es6: true,
@@ -20,12 +22,12 @@ const settings = {
 const overrides = [
   {
     files: ['*.ts', '*.tsx'],
-    parser: require.resolve('@typescript-eslint/parser'),
+    parser: '@typescript-eslint/parser',
     plugins: ['@typescript-eslint/eslint-plugin'],
     settings: {
-      'import/extensions': ['.js', '.ts', '.tsx'],
+      'import/extensions': defaultExtensions,
       'import/parsers': { '@typescript-eslint/parser': ['.ts', '.tsx'] },
-      'import/resolver': { node: { extensions: ['.js', '.ts', '.tsx'] } },
+      'import/resolver': { node: { extensions: defaultExtensions } },
     },
     rules: {
       '@typescript-eslint/adjacent-overload-signatures': 'error',
@@ -89,7 +91,7 @@ const overrides = [
   },
   {
     files: ['*.js'],
-    parser: require.resolve('@babel/eslint-parser'),
+    parser: '@babel/eslint-parser',
     parserOptions: { requireConfigFile: false },
     rules: {
       'import/default': 'error',
@@ -129,35 +131,20 @@ module.exports = {
     'babel',
     'eslint-comments',
     'import',
+    'jest',
     'prettier',
     'react',
     'react-hooks',
     'react-native',
     'simple-import-sort',
+    'unused-imports',
   ],
   rules: {
     'array-callback-return': 'error',
-    'babel/no-invalid-this': 'error',
-    'babel/valid-typeof': 'error',
     'constructor-super': 'error',
     'default-case': ['error', { commentPattern: '^no default$' }],
-    'eslint-comments/disable-enable-pair': ['error', { allowWholeFile: true }],
-    'eslint-comments/no-aggregating-enable': 'error',
-    'eslint-comments/no-duplicate-disable': 'error',
-    'eslint-comments/no-unlimited-disable': 'error',
-    'eslint-comments/no-unused-disable': 'error',
-    'eslint-comments/no-unused-enable': 'error',
     'for-direction': 'error',
     'getter-return': 'error',
-    'import/export': 'error',
-    'import/extensions': 'off',
-    'import/imports-first': 'error',
-    'import/named': 'off',
-    'import/no-amd': 'error',
-    'import/no-commonjs': 'error',
-    'import/no-duplicates': 'error',
-    'import/no-extraneous-dependencies': 'error',
-    'import/no-self-import': 'error',
     'new-parens': 'error',
     'no-array-constructor': 'error',
     'no-caller': 'error',
@@ -226,11 +213,43 @@ module.exports = {
     'no-useless-escape': 'error',
     'no-useless-rename': 'error',
     'no-with': 'error',
+    'require-yield': 'error',
+    'simple-import-sort/exports': 'error',
+    'unicode-bom': 'error',
+    'use-isnan': 'error',
+    eqeqeq: ['error', 'smart'],
+
+    'babel/no-invalid-this': 'error',
+    'babel/valid-typeof': 'error',
+
+    'eslint-comments/disable-enable-pair': ['error', { allowWholeFile: true }],
+    'eslint-comments/no-aggregating-enable': 'error',
+    'eslint-comments/no-duplicate-disable': 'error',
+    'eslint-comments/no-unlimited-disable': 'error',
+    'eslint-comments/no-unused-disable': 'error',
+    'eslint-comments/no-unused-enable': 'error',
+
+    'import/export': 'error',
+    'import/extensions': 'off',
+    'import/imports-first': 'error',
+    'import/named': 'off',
+    'import/no-amd': 'error',
+    'import/no-commonjs': 'error',
+    'import/no-duplicates': 'error',
+    'import/no-extraneous-dependencies': 'error',
+    'import/no-self-import': 'error',
+    'import/no-unresolved': [
+      'error',
+      { caseSensitive: false, ignore: ['^(~|jest)/', 'react-native-reanimated'] },
+    ],
+
     'react-hooks/exhaustive-deps': 'warn',
     'react-hooks/rules-of-hooks': 'error',
-    'react-native/no-raw-text': ['error', { skip: ['Typography'] }],
+
+    'react-native/no-raw-text': ['error', { skip: ['Typography', 'Typo', 'Text'] }],
     'react-native/no-unused-styles': 'error',
     'react-native/sort-styles': ['error', 'asc'],
+
     'react/button-has-type': 'error',
     'react/jsx-boolean-value': ['error', 'never'],
     'react/jsx-curly-brace-presence': ['error', 'never'],
@@ -269,16 +288,7 @@ module.exports = {
     'react/sort-comp': 'error',
     'react/style-prop-object': 'error',
     'react/void-dom-elements-no-children': 'error',
-    'require-yield': 'error',
-    'simple-import-sort/exports': 'error',
-    'unicode-bom': 'error',
-    'use-isnan': 'error',
-    eqeqeq: ['error', 'smart'],
 
-    'import/no-unresolved': [
-      'error',
-      { caseSensitive: false, ignore: ['^(~|jest)/', 'react-native-reanimated'] },
-    ],
     'prettier/prettier': [
       'error',
       {
@@ -296,6 +306,17 @@ module.exports = {
     'simple-import-sort/imports': [
       'error',
       { groups: [['^\\u0000'], ['^@?\\w'], ['^~/'], ['^../'], ['^./']] },
+    ],
+
+    'unused-imports/no-unused-imports': 'error',
+    'unused-imports/no-unused-vars': [
+      'warn',
+      {
+        vars: 'all',
+        varsIgnorePattern: '^_',
+        args: 'after-used',
+        argsIgnorePattern: '^_',
+      },
     ],
   },
 };
